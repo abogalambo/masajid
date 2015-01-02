@@ -7,7 +7,7 @@
 .map-controls{padding: 10px;}
 
 /* pages css */
-#main-container{
+body, #main-container{
 	overflow-x: hidden;
 }
 .page{
