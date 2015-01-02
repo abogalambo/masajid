@@ -1,6 +1,7 @@
 var currentDir = "rtl"
 var currentPage = 'home'
 var pages = ["home","add","about", "thanks"];
+
 function switchDir(dir){
 	if(dir != currentDir){
 		if(dir == "rtl"){
@@ -17,6 +18,18 @@ function switchDir(dir){
 		}
 	}
 }
+
+function toggleDir(){
+	if(currentDir == 'rtl'){
+		switchDir('ltr');
+	}else if(currentDir == 'ltr'){
+		switchDir('rtl');
+	}
+}
+
+$("#dir-button").click(function(){
+	toggleDir();
+});
 
 function toggleMosque(){
 	$("#main-map").toggleClass("col-md-12").toggleClass("col-md-8")
