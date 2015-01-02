@@ -13,3 +13,12 @@ function switchDir(dir){
 		}
 	}
 }
+
+function toggleMosque(){
+	$("#main-map").toggleClass("col-md-12").toggleClass("col-md-8")
+	$('.mosque-data').toggleClass('hide-it');
+}
+
+$("#main-map").click(function(){
+	toggleMosque();
+});
