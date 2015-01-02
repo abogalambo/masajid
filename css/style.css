@@ -19,10 +19,3 @@ body, #main-container{
 #main-container .page + .page{
     left:-100%;
 }
-
-#about{
-	background-color: blue;
-}
-#home{
-	background-color: red;
-}
