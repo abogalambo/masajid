@@ -1,6 +1,28 @@
 /**{border: 1px solid;}*/
+/**{padding: 2px;}*/
 .hide-it{display: none;}
 .logo{padding: 10px;}
 .logo h1{display: inline;}
 /*.logo img{float:right;}*/
 .map-controls{padding: 10px;}
+
+/* pages css */
+#main-container{
+	overflow-x: hidden;
+}
+.page{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#main-container .page + .page{
+    left:-100%;
+}
+
+#about{
+	background-color: blue;
+}
+#home{
+	background-color: red;
+}

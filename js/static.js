@@ -1,4 +1,5 @@
 var currentDir = "rtl"
+var currentPage = 'home'
 function switchDir(dir){
 	if(dir != currentDir){
 		if(dir == "rtl"){
@@ -22,3 +23,10 @@ function toggleMosque(){
 $("#main-map").click(function(){
 	toggleMosque();
 });
+
+function showPage(pageID){
+  var pID = pageID || window.location.hash;
+  $('#' + currentPage).animate({left: '-100%'}, 600);
+  $('#' + pID).stop().animate({left:0}, 600);
+  currentPage = pID
+}
