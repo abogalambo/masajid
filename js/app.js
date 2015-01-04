@@ -51,11 +51,20 @@
 	});
 
 	app.controller('MasajidController', function(){
-		this.mosques = mosques;
+		this.masajid = mosques;
+		this.masjidInfo = false;
+		this.isActive = function(id){
+			return this.activeMosque && this.activeMosque.id === id;
+		};
+		this.setActive = function(mosque){
+			this.activeMosque = mosque;
+			this.masjidInfo = true;
+		};
 	});
 })();
 
 mosques = [{
+	id: 1,
 	name: "Qaed Ibrahim",
 	city: "Alexandria",
 	size: "big",

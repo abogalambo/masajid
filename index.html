@@ -26,7 +26,7 @@
       </div>
     </div>
   
-    <div id="home" class="page">
+    <div id="home" class="page" ng-controller="MasajidController as masajid">
       <div class="row">
         <div class="col-md-12">
           <div class="row map-controls text-right">
@@ -37,11 +37,11 @@
             </div>
           </div>
           <div class="row map">
-            <div id="main-map" class="col-md-12">
-              <img src="img/static/map.jpg" style=""/>
+            <div id="main-map" ng-class="{'col-md-8': masajid.masjidInfo, 'col-md-12': !masajid.masjidInfo}">
+              <img ng-src="img/static/map.jpg" style="" ng-click="masajid.setActive(masajid.masajid[0])"/>
             </div>
-            <div class="mosque-data col-md-4 hide-it">
-              About selected mosque
+            <div class="mosque-data col-md-4" ng-repeat="mosque in masajid.masajid" ng-show="masajid.isActive(mosque.id)">
+              {{mosque.name}}
             </div>
           </div>
         </div>
