@@ -19,3 +19,5 @@ body, #main-container{
 #main-container .page + .page{
     left:-100%;
 }
+
+.angular-google-map-container { height: 400px; }

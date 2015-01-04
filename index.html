@@ -38,7 +38,14 @@
           </div>
           <div class="row map">
             <div id="main-map" ng-class="{'col-md-8': masajid.masjidInfo, 'col-md-12': !masajid.masjidInfo}">
-              <img ng-src="img/static/map.jpg" style="" ng-click="masajid.setActive(masajid.masajid[0])"/>
+              <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                <ui-gmap-marker ng-repeat="mosque in masajid.masajid"
+                  idKey='mosque.id'
+                  coords='{latitude: mosque.lat, longitude: mosque.lng}'
+                  click='masajid.setActive(mosque)'>
+                >
+                </ui-gmap-marker>
+              </ui-gmap-google-map>
             </div>
             <div class="mosque-data col-md-4" ng-repeat="mosque in masajid.masajid" ng-show="masajid.isActive(mosque.id)">
               {{mosque.name}}
@@ -63,6 +70,8 @@
   </div>
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/angular.min.js"></script>
+  <script src='js/libs/lodash.min.js'></script>
+  <script src='js/libs/angular-google-maps.js'></script>
   <script src="js/app.js"></script>
 </body>
 </html>

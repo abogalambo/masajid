@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('masajid',[]);
+	var app = angular.module('masajid',['uiGmapgoogle-maps']);
 
 	app.controller('PagesController', function(){
 		this.pages = ["home","add-mosque","about"];
@@ -50,7 +50,7 @@
 		};
 	});
 
-	app.controller('MasajidController', function(){
+	app.controller('MasajidController', function($scope, uiGmapGoogleMapApi){
 		this.masajid = mosques;
 		this.masjidInfo = false;
 		this.isActive = function(id){
@@ -60,14 +60,37 @@
 			this.activeMosque = mosque;
 			this.masjidInfo = true;
 		};
+
+		uiGmapGoogleMapApi.then(function(maps) {
+			$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+		});
 	});
+
+	app.config(function(uiGmapGoogleMapApiProvider) {
+	    uiGmapGoogleMapApiProvider.configure({
+	        //    key: 'your api key',
+	        v: '3.17',
+	        libraries: 'weather,geometry,visualization'
+	    });
+	})
 })();
 
 mosques = [{
 	id: 1,
 	name: "Qaed Ibrahim",
+	lat: "45",
+	lng: "-73",
 	city: "Alexandria",
 	size: "big",
 	about: "A landmark of Alexandria",
 	images: []
-}]
+},{
+	id: 2,
+	name: "Hatem Mosque",
+	lat: "45.2",
+	lng: "-73",
+	city: "Alexandria",
+	size: "big",
+	about: "Old mosque in Smooha",
+	images: []
+}];
