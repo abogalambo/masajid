@@ -3,8 +3,8 @@
 
 	app.controller('PagesController', function(){
 		this.pages = ["home","add-mosque","about"];
+		this.active = this.pages.indexOf('home');
 		this.currentDir = 'rtl';
-		this.active = 0;
 		this.isActive = function(page){
 			return this.active === this.pages.indexOf(page);
 		};
@@ -54,11 +54,14 @@
 		this.masajid = mosques;
 		this.masjidInfo = false;
 		this.isActive = function(id){
-			return this.activeMosque && this.activeMosque.id === id;
+			return this.masjidInfo && this.activeMosque && this.activeMosque.id === id;
 		};
 		this.setActive = function(mosque){
 			this.activeMosque = mosque;
 			this.masjidInfo = true;
+		};
+		this.hidePreview = function(){
+			this.masjidInfo = false;
 		};
 
 		uiGmapGoogleMapApi.then(function(maps) {
@@ -92,5 +95,14 @@ mosques = [{
 	city: "Alexandria",
 	size: "big",
 	about: "Old mosque in Smooha",
+	images: []
+},{
+	id: 3,
+	name: "Om al mo2meneen",
+	lat: "45",
+	lng: "-73.4",
+	city: "Alexandria",
+	size: "big",
+	about: "",
 	images: []
 }];

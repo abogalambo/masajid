@@ -49,6 +49,7 @@
             </div>
             <div class="mosque-data col-md-4" ng-repeat="mosque in masajid.masajid" ng-show="masajid.isActive(mosque.id)">
               {{mosque.name}}
+              <a ng-click="masajid.hidePreview()"> X </a>
             </div>
           </div>
         </div>
