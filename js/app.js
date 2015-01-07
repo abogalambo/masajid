@@ -101,11 +101,7 @@
 				});
 				if(matches.length){
 					that.setActive(matches[0]);
-				}else{
-					that.unselect();
 				}
-			}else if($state.includes("map")){
-				that.unselect();
 			}
 		});
 	});
