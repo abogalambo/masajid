@@ -1,0 +1,7 @@
+- Slide animation
+- More mosque data
+- Styling map
+	- nav bar
+- Add nested countries and cities
+- filtering by country / city
+- i18n
