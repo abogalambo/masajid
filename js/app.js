@@ -1,30 +1,29 @@
 (function(){
-	var app = angular.module('masajid',['uiGmapgoogle-maps']);
+	var app = angular.module('masajid',['uiGmapgoogle-maps', 'ui.router']).
+		config(function($stateProvider){
+			$stateProvider.state('map', {
+				url: "/masajid"
+			}).state('map.selected', {
+				url: "/:id"
+			}).state('add-mosque', {
+				url: "/add_mosque"
+			}).state('about', {
+				url: "/about"
+			});
+		}).
+		config(function(uiGmapGoogleMapApiProvider) {
+		    uiGmapGoogleMapApiProvider.configure({
+		        //    key: 'your api key',
+		        v: '3.17',
+		        libraries: 'weather,geometry,visualization'
+		    });
+		});
 
-	app.controller('PagesController', function(){
-		this.pages = ["home","add-mosque","about"];
-		this.active = this.pages.indexOf('home');
+	app.controller('PagesController', function($scope, $state){
+		this.pages = ["map","add-mosque","about"];
 		this.currentDir = 'rtl';
 		this.isActive = function(page){
 			return this.active === this.pages.indexOf(page);
-		};
-		this.initPages = function(){
-			var multiplier = 1;
-			if(this.currentDir == 'ltr') multiplier = -1;
-			for(var i=0; i< this.pages.length; i++){
-				$("#" + this.pages[i]).css('left', (i* -100 * multiplier) + "%");
-			}
-		}
-		this.initPages();
-		this.goTo = function(page){
-			var index = this.pages.indexOf(page);
-			if(index == -1) return;
-			var multiplier = 1;
-			if(this.currentDir == 'ltr') multiplier = -1;
-			for(var i=0; i< this.pages.length; i++){
-				$("#" + this.pages[i]).animate({left: 100 * multiplier * (index - i) + "%"});
-			}
-			this.active = index;
 		};
 		this.toggleDir = function(){
 			if(this.currentDir == 'rtl'){
@@ -40,42 +39,76 @@
 				$('head').append(link)
 				$('.text-left').removeClass('text-left').addClass('text-right')
 				this.currentDir = dir
-				this.initPages();
 			}else if(dir == "ltr"){
 				$("#rtl-style").remove()
 				$('.text-right').removeClass('text-right').addClass('text-left')
 				this.currentDir = dir
-				this.initPages();
 			};
 		};
+		this.computeStyle = function(page){
+			var i = this.pages.indexOf(page);
+			var multiplier = 1;
+			if(this.currentDir == 'ltr') multiplier = -1;
+			return {left: 100 * multiplier * (this.active - i) + "%"}
+		}
+
+		var that = this;
+	    $scope.$watch(function () { return $state.$current.name; }, function (newVal) {
+	    	var matches = that.pages.filter(function(page){
+	    		return $state.includes(page);
+	    	})
+	    	if(matches.length == 0){
+	    		that.active = 0;	
+	    	}else{
+	    		that.active = that.pages.indexOf(matches[0]);
+	    	}
+		});
 	});
 
-	app.controller('MasajidController', function($scope, uiGmapGoogleMapApi){
+	app.controller('MasajidController', function($scope, $state, uiGmapGoogleMapApi){
 		this.masajid = mosques;
-		this.masjidInfo = false;
-		this.isActive = function(id){
-			return this.masjidInfo && this.activeMosque && this.activeMosque.id === id;
+		this.preview = false;
+		this.isActive = function(msq){
+			return this.activeMosque && this.activeMosque.id === msq.id;
 		};
+
 		this.setActive = function(mosque){
 			this.activeMosque = mosque;
-			this.masjidInfo = true;
+			this.preview = true;
+			$state.go('map.selected', {id:mosque.id}, {notify:false});
 		};
+
+		this.unselect = function(){
+			this.activeMosque = undefined;
+			this.preview = false;
+			$state.go('map', {}, {notify:false});
+		};
+
 		this.hidePreview = function(){
-			this.masjidInfo = false;
+			this.preview = false;
 		};
 
 		uiGmapGoogleMapApi.then(function(maps) {
 			$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 		});
-	});
 
-	app.config(function(uiGmapGoogleMapApiProvider) {
-	    uiGmapGoogleMapApiProvider.configure({
-	        //    key: 'your api key',
-	        v: '3.17',
-	        libraries: 'weather,geometry,visualization'
-	    });
-	})
+		var that = this;
+		$scope.$watch(function () { return $state.$current.name; }, function (newVal) {
+			if($state.includes("map.selected")){
+				var activeId = parseInt($state.params.id);
+				var matches = that.masajid.filter(function(msq){
+					return msq.id == activeId
+				});
+				if(matches.length){
+					that.setActive(matches[0]);
+				}else{
+					that.unselect();
+				}
+			}else if($state.includes("map")){
+				that.unselect();
+			}
+		});
+	});
 })();
 
 mosques = [{

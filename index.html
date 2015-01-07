@@ -19,58 +19,26 @@
         <h1> مــــــــساجد </h1>
       </div>
       <div class="col-md-8 nav-buttons">
-        <a href="#tab-home" ng-click="pages.goTo('home')" class="btn btn-default navbar-btn">ابحث عن مسجد</a>
-        <a href="#tab-add-mosque" ng-click="pages.goTo('add-mosque')" href="#" class="btn btn-default navbar-btn">أضف مسجدا</a>
-        <a href="#tab-about" ng-click="pages.goTo('about')" class="btn btn-default navbar-btn">من نحن؟</a>
+        <a href="#/masajid" class="btn btn-default navbar-btn">ابحث عن مسجد</a>
+        <a href="#/add_mosque" class="btn btn-default navbar-btn">أضف مسجدا</a>
+        <a href="#/about" class="btn btn-default navbar-btn">من نحن؟</a>
         <a id="dir-button" ng-click="pages.toggleDir()" href="javascript:;" class="btn btn-default navbar-btn">dir</a>
       </div>
     </div>
   
-    <div id="home" class="page" ng-controller="MasajidController as masajid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row map-controls text-right">
-            <div class="col-md-12">
-              <select class="form-control">
-                <option>Alexandria</option>
-              </select>
-            </div>
-          </div>
-          <div class="row map">
-            <div id="main-map" ng-class="{'col-md-8': masajid.masjidInfo, 'col-md-12': !masajid.masjidInfo}">
-              <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-                <ui-gmap-marker ng-repeat="mosque in masajid.masajid"
-                  idKey='mosque.id'
-                  coords='{latitude: mosque.lat, longitude: mosque.lng}'
-                  click='masajid.setActive(mosque)'>
-                >
-                </ui-gmap-marker>
-              </ui-gmap-google-map>
-            </div>
-            <div class="mosque-data col-md-4" ng-repeat="mosque in masajid.masajid" ng-show="masajid.isActive(mosque.id)">
-              {{mosque.name}}
-              <a ng-click="masajid.hidePreview()"> X </a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div ng-style="pages.computeStyle('map')" class="page" ng-controller="MasajidController as masajid" ng-include="'map.html'">
     </div>
 
-    <div id="about" class="page">
-      <div class="row">
-        <div> About us: We are good people </div>
-      </div>
+    <div ng-style="pages.computeStyle('about')" class="page" ng-include="'about.html'">
     </div>
 
-    <div id="add-mosque" class="page">
-      <div class="row">
-        <div> Add new mosque </div>
-      </div>
+    <div ng-style="pages.computeStyle('add-mosque')" class="page" ng-include="'add-mosque.html'">
     </div>
     
   </div>
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/angular.min.js"></script>
+  <script src="js/libs/angular-ui-router.min.js"></script>
   <script src='js/libs/lodash.min.js'></script>
   <script src='js/libs/angular-google-maps.js'></script>
   <script src="js/app.js"></script>

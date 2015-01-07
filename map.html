@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row map-controls text-right">
+      <div class="col-md-12">
+        <select class="form-control">
+          <option>Alexandria</option>
+        </select>
+      </div>
+    </div>
+    <div class="row map">
+      <div id="main-map" ng-class="{'col-md-8': masajid.preview, 'col-md-12': !masajid.preview}">
+        <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+          <ui-gmap-marker ng-repeat="mosque in masajid.masajid"
+            idKey='mosque.id'
+            coords='{latitude: mosque.lat, longitude: mosque.lng}'
+            click='masajid.setActive(mosque)'>
+          >
+          </ui-gmap-marker>
+        </ui-gmap-google-map>
+      </div>
+      <div class="mosque-data col-md-4" ng-show="masajid.preview">
+        {{masajid.activeMosque.name}}
+        <a ng-click="masajid.hidePreview()"> X </a>
+      </div>
+    </div>
+  </div>
+</div>
