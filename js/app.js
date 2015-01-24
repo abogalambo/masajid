@@ -105,6 +105,33 @@
 			}
 		});
 	});
+
+	app.controller('AddMosqueController', function($scope, $state, uiGmapGoogleMapApi){
+		var that = this;
+		this.mosque = {lat: 0, lng: 0};
+		this.mosques = mosques;
+		this.markerDragged = function(marker,eventName,model,args){
+			var currentPosition = marker.getPosition();
+			that.mosque.lat = currentPosition.lat();
+			that.mosque.lng = currentPosition.lng();
+		}
+		uiGmapGoogleMapApi.then(function(maps) {
+			console.log(maps)
+			$scope.map = {
+				center: { latitude: 0, longitude: 0 },
+				events: { click: function(map, eventName, args){
+					var position = args[0].latLng;
+					that.mosque.lng = position.lng();
+					that.mosque.lat = position.lat();
+					map.panTo(args[0].latLng)
+					$scope.refresh = false;
+					$scope.refresh = true;
+				}},
+				zoom: 3
+			};
+		});
+	});
+
 })();
 
 mosques = [{

@@ -17,8 +17,19 @@ body, #main-container{
 	-webkit-transition:left 0.5s ease;
     transition:left 0.5s ease;
 }
+
+.page>.row{
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 10px;
+}
 #main-map{
 	-webkit-transition:width 0.3s ease;
     transition:width 0.3s ease;
 }
 .angular-google-map-container { height: 400px; }
+
+#mosque-form{
+	margin: 10px
+	padding: 30px;
+}

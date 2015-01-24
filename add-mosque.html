@@ -1,3 +1,25 @@
 <div class="row">
-	<div> Add new mosque </div>
+	<form class="form-horizontal" name="mosqueForm" ng-controller="AddMosqueController as form">
+		<div class="col-md-12" id="mosque-form">
+		  <div class="col-md-12">
+		    <input ng-model="form.mosque.name" type="text" class="form-control" placeholder="اسم المسجد"/>
+		  </div>
+
+	  	<div id="input-map" class="col-md-9">
+	  		<ui-gmap-google-map center='map.center' zoom='map.zoom' events= 'map.events' pan='true'>
+		  	    <ui-gmap-marker idKey="'hi'"
+	            coords='{latitude: form.mosque.lat, longitude: form.mosque.lng}'
+	            options='{draggable: true}'
+	            events='{drag: form.markerDragged}'
+	            ></ui-gmap-marker>
+        	</ui-gmap-google-map>
+	  	</div>
+	  	<div class="col-md-3">
+	    	<input ng-model="form.mosque.lng" type="text" class="form-control" placeholder="خط الطول"/>
+	    	<input ng-model="form.mosque.lat" type="text" class="form-control" placeholder="دائرة العرض"/>
+	    	<button type="submit" class="btn btn-default">حفظ</button>
+	    </div>
+		  
+	  </div>
+	</form>
 </div>

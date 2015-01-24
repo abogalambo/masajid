@@ -1,7 +1,15 @@
-- Slide animation
-- More mosque data
+To do
+- Insert mosque
+- Mosque data display
 - Styling map
 	- nav bar
 - Add nested countries and cities
 - filtering by country / city
 - i18n
+
+Done
+- Slide animation
+
+map:
+x when clicking map, cursor moves to that point
+x mosque position is updated
